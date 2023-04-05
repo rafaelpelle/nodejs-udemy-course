@@ -1,4 +1,8 @@
 const fs = require('fs');
+const messages = require('./messages');
 
-fs.writeFileSync('file.txt', 'My name is Rafael.');
-fs.appendFileSync('file.txt', ' My last name is Pelle.');
+const fileName = 'file.txt';
+const {message1, message2} = messages;
+
+fs.writeFileSync(fileName, message1);
+fs.appendFileSync(fileName, message2);

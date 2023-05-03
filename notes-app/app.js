@@ -1,14 +1,23 @@
-const fs = require('fs');
-const validator = require('validator');
-const messages = require('./messages');
+const fs = require("fs");
+const yargs = require("yargs");
 
-const fileName = 'file.txt';
-const {message1, message2} = messages;
-fs.writeFileSync(fileName, message1);
-fs.appendFileSync(fileName, message2);
-fs.appendFileSync(fileName, process.argv[2]);
+function addNote(title, message) {
+  fs.writeFileSync(title, message);
+}
 
-const email1 = 'rafapelle@gmail.com';
-const email2 = 'gmail.com';
-console.log(email1, validator.isEmail(email1));
-console.log(email2, validator.isEmail(email2));
+function removeNote(title) {
+  fs.unlinkSync(`${__dirname}/${title}`);
+}
+
+const handleMapper = {
+  add: addNote,
+  remove: removeNote,
+};
+
+const {command, title, message} = yargs.argv;
+
+const handler = handleMapper[command];
+
+if (handler) {
+  handler(title, message);
+}

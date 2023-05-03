@@ -1,15 +1,26 @@
+const fs = require("fs");
 const fileName = "notes.json";
 
+function loadNotes() {
+  try {
+    const dataBuffer = fs.readFileSync(fileName);
+    const dataJSON = dataBuffer.toString();
+    return JSON.parse(dataJSON).notes;
+  } catch (error) {
+    return [];
+  }
+}
+
 function addNoteJSON(title, message) {
-  const content = JSON.parse(fs.readFileSync(fileName));
-  content.notes.push({ title, message });
-  fs.writeFileSync(fileName, JSON.stringify(content));
+  const notes = loadNotes();
+  const newNotes = [...notes, { title, message }];
+  fs.writeFileSync(fileName, JSON.stringify({ notes: newNotes }));
 }
 
 function removeNoteJSON(title) {
-  const content = JSON.parse(fs.readFileSync(fileName));
-  content.notes = content.notes.filter((note) => note.title !== title);
-  fs.writeFileSync(fileName, JSON.stringify(content));
+  const notes = loadNotes();
+  const newNotes = notes.filter((note) => note.title !== title);
+  fs.writeFileSync(fileName, JSON.stringify({ notes: newNotes }));
 }
 
 const handlerMapper = {

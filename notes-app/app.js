@@ -6,6 +6,7 @@ const fileName = 'file.txt';
 const {message1, message2} = messages;
 fs.writeFileSync(fileName, message1);
 fs.appendFileSync(fileName, message2);
+fs.appendFileSync(fileName, process.argv[2]);
 
 const email1 = 'rafapelle@gmail.com';
 const email2 = 'gmail.com';

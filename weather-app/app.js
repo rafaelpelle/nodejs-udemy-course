@@ -3,10 +3,11 @@ const request = require("request");
 
 const { WEATHER_API_KEY } = process.env;
 const WEATHER_API_URL = "http://api.weatherstack.com/current";
+const query = process.argv[2];
 
 request(
   {
-    url: `${WEATHER_API_URL}?access_key=${WEATHER_API_KEY}&query=Florianopolis`,
+    url: `${WEATHER_API_URL}?access_key=${WEATHER_API_KEY}&query=${query}`,
     json: true,
   },
   (error, response) => {
